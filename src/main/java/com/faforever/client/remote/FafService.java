@@ -9,6 +9,7 @@ import com.faforever.client.api.PlayerAchievement;
 import com.faforever.client.api.Ranked1v1Stats;
 import com.faforever.client.api.RatingType;
 import com.faforever.client.chat.avatar.AvatarBean;
+import com.faforever.client.clan.Clan;
 import com.faforever.client.coop.CoopMission;
 import com.faforever.client.domain.RatingHistoryDataPoint;
 import com.faforever.client.fa.relay.GpgGameMessage;
