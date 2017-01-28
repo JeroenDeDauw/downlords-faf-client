@@ -1,5 +1,6 @@
 package com.faforever.client.main;
 
+import com.faforever.client.chat.event.UnreadPrivateMessageEvent;
 import com.faforever.client.config.ClientProperties;
 import com.faforever.client.fx.AbstractViewController;
 import com.faforever.client.fx.Controller;
@@ -123,18 +124,18 @@ public class MainController implements Controller<Node> {
 
     this.mainWindowTitle = clientProperties.getMainWindowTitle();
     this.ratingBeta = clientProperties.getTrueSkill().getBeta();
-    
+
     this.viewCache = CacheBuilder.newBuilder().build();
   }
 
   public void initialize() {
+
     newsButton.setUserData(NavigationItem.NEWS);
     chatButton.setUserData(NavigationItem.CHAT);
     playButton.setUserData(NavigationItem.PLAY);
     vaultButton.setUserData(NavigationItem.VAULT);
     leaderboardsButton.setUserData(NavigationItem.LEADERBOARD);
     unitsButton.setUserData(NavigationItem.UNITS);
-
     eventBus.register(this);
     windowController = uiService.loadFxml("theme/window.fxml");
 
@@ -175,9 +176,7 @@ public class MainController implements Controller<Node> {
     notificationService.addPersistentNotificationListener(change -> runLater(() -> updateNotificationsButton(change.getSet())));
     notificationService.addImmediateNotificationListener(notification -> runLater(() -> displayImmediateNotification(notification)));
     notificationService.addTransientNotificationListener(notification -> runLater(() -> transientNotificationsController.addNotification(notification)));
-
     gameService.addOnRankedMatchNotificationListener(this::onMatchmakerMessage);
-
     // Always load chat immediately so messages or joined channels don't need to be cached until we display them.
     loadView(NavigationItem.CHAT);
   }
@@ -195,6 +194,11 @@ public class MainController implements Controller<Node> {
   @Subscribe
   public void onUnreadNews(UnreadNewsEvent event) {
     runLater(() -> newsButton.pseudoClassStateChanged(HIGHLIGHTED, event.hasUnreadNews()));
+  }
+
+  @Subscribe
+  public void onUnreadMessage(UnreadPrivateMessageEvent event) {
+    runLater(() -> chatButton.pseudoClassStateChanged(HIGHLIGHTED, !event.isChatFocused()));
   }
 
   private void setContent(Node node) {

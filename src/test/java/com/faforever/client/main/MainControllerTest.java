@@ -1,6 +1,8 @@
 package com.faforever.client.main;
 
 import com.faforever.client.chat.ChatController;
+import com.faforever.client.chat.ChatMessage;
+import com.faforever.client.chat.event.UnreadPrivateMessageEvent;
 import com.faforever.client.config.ClientProperties;
 import com.faforever.client.fx.WindowController;
 import com.faforever.client.game.GameService;
@@ -31,6 +33,8 @@ import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.css.PseudoClass;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -51,6 +55,7 @@ import java.util.function.Consumer;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
@@ -208,6 +213,11 @@ public class MainControllerTest extends AbstractPlainJavaFxTest {
     assertThat(instance.getRoot().getParent(), CoreMatchers.is(nullValue()));
   }
 
+  @Test
+  public void testOnUnreadMessage() throws Exception {
+    instance.onUnreadMessage(new UnreadPrivateMessageEvent(mock(ChatMessage.class), false));
+    assertEquals(instance.chatButton.getPseudoClassStates().toArray()[0], PseudoClass.getPseudoClass("highlighted"));
+  }
 
   @Test
   public void testOnMatchMakerMessageDisplaysNotification80Quality() {
