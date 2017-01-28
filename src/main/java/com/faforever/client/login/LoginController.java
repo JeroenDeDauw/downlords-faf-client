@@ -42,10 +42,8 @@ public class LoginController implements Controller<Node> {
   public Pane loginProgressPane;
   public CheckBox autoLoginCheckBox;
   public TextField usernameInput;
-  public Button forgotLogin;
   public TextField passwordInput;
   public Button loginButton;
-  public Button createAccountButton;
   public Label loginErrorLabel;
   public Pane loginRoot;
 
@@ -108,7 +106,7 @@ public class LoginController implements Controller<Node> {
       if (!(e instanceof CancellationException)) {
         loginErrorLabel.setText(e.getCause().getLocalizedMessage());
         loginErrorLabel.setVisible(true);
-        //TODO: fix wrapping issue in loginErrorLable
+        //FIXME: fix wrapping issue in loginErrorLable
       } else {
         loginErrorLabel.setVisible(false);
       }
