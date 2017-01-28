@@ -213,11 +213,6 @@ public class MainControllerTest extends AbstractPlainJavaFxTest {
     assertThat(instance.getRoot().getParent(), CoreMatchers.is(nullValue()));
   }
 
-  @Test
-  public void testOnUnreadMessage() throws Exception {
-    instance.onUnreadMessage(new UnreadPrivateMessageEvent(mock(ChatMessage.class), false));
-    assertEquals(instance.chatButton.getPseudoClassStates().toArray()[0], PseudoClass.getPseudoClass("highlighted"));
-  }
 
   @Test
   public void testOnMatchMakerMessageDisplaysNotification80Quality() {

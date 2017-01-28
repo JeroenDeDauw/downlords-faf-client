@@ -1,6 +1,7 @@
 package com.faforever.client.main;
 
 import com.faforever.client.chat.event.UnreadPrivateMessageEvent;
+import com.faforever.client.chat.event.UnreadPrivateMessageEvent;
 import com.faforever.client.config.ClientProperties;
 import com.faforever.client.fx.AbstractViewController;
 import com.faforever.client.fx.Controller;
