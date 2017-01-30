@@ -35,6 +35,8 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.css.PseudoClass;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -218,6 +220,14 @@ public class MainControllerTest extends AbstractPlainJavaFxTest {
   public void testOnMatchMakerMessageDisplaysNotification80Quality() {
     prepareTestMatchmakerMessageTest(100);
     verify(notificationService).addNotification(any(TransientNotification.class));
+  }
+
+  @Test
+  public void onChat() throws Exception {
+    instance.chatButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("highlighted"), true);
+    instance.onChat(new ActionEvent(instance.chatButton, Event.NULL_SOURCE_TARGET));
+    assertThat(instance.chatButton.getPseudoClassStates().contains(PseudoClass.getPseudoClass("highlighted")), is(false));
+
   }
 
   private void prepareTestMatchmakerMessageTest(float deviation) {

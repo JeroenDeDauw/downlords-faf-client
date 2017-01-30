@@ -1231,6 +1231,11 @@
   -fx-border-color: transparent;
 }
 
+.main-navigation-button:highlighted {
+  -fx-background-color:rgb(43,255,100);
+  -fx-text-fill: black;
+}
+
 .main-navigation-button:hover {
   -fx-color: transparent;
   -fx-border-color: -dimmed-accent;

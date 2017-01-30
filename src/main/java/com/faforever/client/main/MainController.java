@@ -461,4 +461,9 @@ public class MainController implements Controller<Node> {
   private AbstractViewController<?> loadView(NavigationItem item) {
     return noCatch(() -> viewCache.get(item, () -> uiService.loadFxml(item.getFxmlFile())));
   }
+
+  public void onChat(ActionEvent actionEvent) {
+    chatButton.pseudoClassStateChanged(HIGHLIGHTED, false);
+    onNavigate(actionEvent);
+  }
 }
