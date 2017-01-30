@@ -1,7 +1,7 @@
 package com.faforever.client.achievements;
 
-import com.faforever.client.api.AchievementState;
-import com.faforever.client.api.PlayerAchievement;
+import com.faforever.client.api.dto.AchievementState;
+import com.faforever.client.api.dto.PlayerAchievement;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +11,10 @@ public class PlayerAchievementBuilder {
 
   private PlayerAchievementBuilder() {
     playerAchievement = new PlayerAchievement();
+  }
+
+  public static PlayerAchievementBuilder create() {
+    return new PlayerAchievementBuilder();
   }
 
   public PlayerAchievementBuilder defaultValues() {
@@ -38,9 +42,5 @@ public class PlayerAchievementBuilder {
 
   public PlayerAchievement get() {
     return playerAchievement;
-  }
-
-  public static PlayerAchievementBuilder create() {
-    return new PlayerAchievementBuilder();
   }
 }

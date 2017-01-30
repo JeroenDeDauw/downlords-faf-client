@@ -1,6 +1,7 @@
 package com.faforever.client.leaderboard;
 
-import com.faforever.client.api.Ranked1v1Stats;
+import com.faforever.client.FafClientApplication;
+import com.faforever.client.api.dto.Ranked1v1Stats;
 import com.faforever.client.game.KnownFeaturedMod;
 import com.faforever.client.remote.FafService;
 import org.slf4j.Logger;
@@ -17,7 +18,7 @@ import java.util.concurrent.CompletionStage;
 
 @Lazy
 @Service
-@Profile("!local")
+@Profile("!" + FafClientApplication.POFILE_OFFLINE)
 public class LeaderboardServiceImpl implements LeaderboardService {
 
   private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());

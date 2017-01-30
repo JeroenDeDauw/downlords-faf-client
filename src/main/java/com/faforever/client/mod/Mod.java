@@ -13,20 +13,16 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.Objects;
-
-import static com.github.nocatch.NoCatch.noCatch;
 
 public class Mod {
   public static final Comparator<? super Mod> TIMES_PLAYED_COMPARATOR = (o1, o2) -> Integer.compare(o1.getPlayed(), o2.getPlayed());
@@ -74,7 +70,7 @@ public class Mod {
     hookDirectories = new SimpleListProperty<>(FXCollections.observableArrayList());
   }
 
-  public static Mod fromModInfo(com.faforever.client.api.Mod mod) {
+  public static Mod fromModInfo(com.faforever.client.api.dto.Mod mod) {
     Mod modInfoBean = new Mod();
     modInfoBean.setUiOnly("UI".equals(mod.getType()));
     modInfoBean.setName(mod.getDisplayName());
@@ -86,14 +82,9 @@ public class Mod {
     modInfoBean.setDescription(mod.getDescription());
     modInfoBean.setId(mod.getId());
     modInfoBean.setDownloads(mod.getDownloads());
-    modInfoBean.setThumbnailUrl(StringUtils.isEmpty(mod.getThumbnailUrl()) ? null : noCatch(() -> new URL(mod.getThumbnailUrl())));
+    modInfoBean.setThumbnailUrl(mod.getThumbnailUrl());
 //    modInfoBean.getComments().setAll(mod.getComments());
-    try {
-      modInfoBean.setDownloadUrl(new URL(mod.getDownloadUrl()));
-    } catch (MalformedURLException e) {
-      logger.warn("Mod '{}' has an invalid downloadUrl: {}", mod.getId(), mod.getDownloadUrl());
-      modInfoBean.setDownloadUrl(null);
-    }
+    modInfoBean.setDownloadUrl(mod.getDownloadUrl());
     return modInfoBean;
   }
 

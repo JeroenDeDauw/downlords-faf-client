@@ -1,6 +1,6 @@
 package com.faforever.client.leaderboard;
 
-import com.faforever.client.api.Ranked1v1Stats;
+import com.faforever.client.api.dto.Ranked1v1Stats;
 import com.faforever.client.game.KnownFeaturedMod;
 import com.faforever.client.remote.FafService;
 import org.junit.Before;

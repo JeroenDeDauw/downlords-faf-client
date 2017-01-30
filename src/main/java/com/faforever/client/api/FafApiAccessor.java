@@ -1,5 +1,14 @@
 package com.faforever.client.api;
 
+import com.faforever.client.api.dto.AchievementDefinition;
+import com.faforever.client.api.dto.CoopLeaderboardEntry;
+import com.faforever.client.api.dto.FeaturedMod;
+import com.faforever.client.api.dto.FeaturedModFile;
+import com.faforever.client.api.dto.History;
+import com.faforever.client.api.dto.PlayerAchievement;
+import com.faforever.client.api.dto.PlayerEvent;
+import com.faforever.client.api.dto.Ranked1v1Stats;
+import com.faforever.client.api.dto.RatingType;
 import com.faforever.client.coop.CoopMission;
 import com.faforever.client.io.ByteCountListener;
 import com.faforever.client.leaderboard.Ranked1v1EntryBean;
@@ -43,7 +52,7 @@ public interface FafApiAccessor {
 
   History getRatingHistory(RatingType ratingType, int playerId);
 
-  List<MapBean> getMaps();
+  List<MapBean> getAllMaps();
 
   List<MapBean> getMostDownloadedMaps(int count);
 

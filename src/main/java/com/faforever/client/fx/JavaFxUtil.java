@@ -29,6 +29,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.StringConverter;
+import lombok.SneakyThrows;
 
 import java.lang.reflect.Field;
 import java.nio.file.Path;
@@ -257,10 +258,14 @@ public final class JavaFxUtil {
     }
   }
 
+  @SneakyThrows
   private static void writeImage(Image image, Path path, String format) {
-    if (path.getParent() != null) {
-      noCatch(() -> createDirectories(path.getParent()));
+    if (image == null) {
+      return;
     }
-    noCatch(() -> write(SwingFXUtils.fromFXImage(image, null), format, path.toFile()));
+    if (path.getParent() != null) {
+      createDirectories(path.getParent());
+    }
+    write(SwingFXUtils.fromFXImage(image, null), format, path.toFile());
   }
 }

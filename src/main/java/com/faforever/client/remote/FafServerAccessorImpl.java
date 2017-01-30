@@ -1,5 +1,6 @@
 package com.faforever.client.remote;
 
+import com.faforever.client.FafClientApplication;
 import com.faforever.client.config.CacheNames;
 import com.faforever.client.config.ClientProperties;
 import com.faforever.client.config.ClientProperties.Server;
@@ -57,6 +58,7 @@ import com.faforever.client.remote.gson.ServerMessageTypeTypeAdapter;
 import com.faforever.client.remote.gson.VictoryConditionTypeAdapter;
 import com.faforever.client.update.Version;
 import com.github.nocatch.NoCatch;
+import com.google.common.hash.Hashing;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -94,10 +96,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import static com.faforever.client.util.ConcurrentUtil.executeInBackground;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Lazy
 @Component
-@Profile("!local")
+@Profile("!" + FafClientApplication.POFILE_OFFLINE)
 public class FafServerAccessorImpl extends AbstractServerAccessor implements FafServerAccessor {
 
   private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -271,10 +274,7 @@ public class FafServerAccessorImpl extends AbstractServerAccessor implements Faf
 
   @Override
   public CompletionStage<GameLaunchMessage> requestJoinGame(int gameId, String password) {
-    JoinGameMessage joinGameMessage = new JoinGameMessage(
-        gameId,
-        password
-    );
+    JoinGameMessage joinGameMessage = new JoinGameMessage(gameId, password);
 
     gameLaunchFuture = new CompletableFuture<>();
     writeToServer(joinGameMessage);
@@ -429,7 +429,7 @@ public class FafServerAccessorImpl extends AbstractServerAccessor implements Faf
 
   private void logIn(String username, String password) {
     String uniqueId = uidService.generate(String.valueOf(sessionId.get()), preferencesService.getFafDataDirectory().resolve("uid.log"));
-    writeToServer(new LoginClientMessage(username, password, sessionId.get(), uniqueId, localIp));
+    writeToServer(new LoginClientMessage(username, Hashing.sha256().hashString(password, UTF_8).toString(), sessionId.get(), uniqueId, localIp));
   }
 
   private void onGameLaunchInfo(GameLaunchMessage gameLaunchMessage) {

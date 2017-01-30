@@ -1,7 +1,7 @@
 package com.faforever.client.achievements;
 
-import com.faforever.client.api.AchievementDefinition;
-import com.faforever.client.api.PlayerAchievement;
+import com.faforever.client.api.dto.AchievementDefinition;
+import com.faforever.client.api.dto.PlayerAchievement;
 import javafx.scene.image.Image;
 
 import java.util.List;

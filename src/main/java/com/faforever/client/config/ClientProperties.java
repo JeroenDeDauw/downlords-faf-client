@@ -131,8 +131,10 @@ public class ClientProperties {
   @Data
   public static class Api {
     private String baseUrl;
+    private String clientId;
+    private String clientSecret;
+    private String accessTokenUri;
   }
-
 
   @Data
   public static class UnitDatabase {

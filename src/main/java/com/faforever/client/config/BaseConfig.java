@@ -1,9 +1,5 @@
 package com.faforever.client.config;
 
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.gson.GsonFactory;
 import com.google.common.eventbus.EventBus;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -28,8 +24,12 @@ import java.util.concurrent.TimeUnit;
 @PropertySource("classpath:/application.properties")
 public class BaseConfig {
 
+  private final ScheduledExecutorService scheduledExecutorService;
+
   @Inject
-  ScheduledExecutorService scheduledExecutorService;
+  public BaseConfig(ScheduledExecutorService scheduledExecutorService) {
+    this.scheduledExecutorService = scheduledExecutorService;
+  }
 
   @Bean
   static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
@@ -56,16 +56,6 @@ public class BaseConfig {
   @Bean
   ScheduledExecutorService scheduledExecutorService() {
     return Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
-  }
-
-  @Bean
-  HttpTransport httpTransport() {
-    return new NetHttpTransport.Builder().build();
-  }
-
-  @Bean
-  JsonFactory jsonFactory() {
-    return GsonFactory.getDefaultInstance();
   }
 
   @PreDestroy

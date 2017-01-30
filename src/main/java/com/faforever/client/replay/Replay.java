@@ -1,6 +1,6 @@
 package com.faforever.client.replay;
 
-import com.faforever.client.api.ReplayInfo;
+import com.faforever.client.api.dto.ReplayInfo;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.MapProperty;
 import javafx.beans.property.ObjectProperty;

@@ -1,13 +1,13 @@
 package com.faforever.client.remote;
 
-import com.faforever.client.api.AchievementDefinition;
-import com.faforever.client.api.CoopLeaderboardEntry;
 import com.faforever.client.api.FafApiAccessor;
-import com.faforever.client.api.FeaturedMod;
-import com.faforever.client.api.FeaturedModFile;
-import com.faforever.client.api.PlayerAchievement;
-import com.faforever.client.api.Ranked1v1Stats;
-import com.faforever.client.api.RatingType;
+import com.faforever.client.api.dto.AchievementDefinition;
+import com.faforever.client.api.dto.CoopLeaderboardEntry;
+import com.faforever.client.api.dto.FeaturedMod;
+import com.faforever.client.api.dto.FeaturedModFile;
+import com.faforever.client.api.dto.PlayerAchievement;
+import com.faforever.client.api.dto.Ranked1v1Stats;
+import com.faforever.client.api.dto.RatingType;
 import com.faforever.client.chat.avatar.AvatarBean;
 import com.faforever.client.chat.avatar.event.AvatarChangedEvent;
 import com.faforever.client.config.CacheNames;
@@ -156,7 +156,7 @@ public class FafServiceImpl implements FafService {
 
   @Override
   public List<MapBean> getMaps() {
-    return fafApiAccessor.getMaps();
+    return fafApiAccessor.getAllMaps();
   }
 
   @Override

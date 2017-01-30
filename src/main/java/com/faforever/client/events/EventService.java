@@ -1,6 +1,6 @@
 package com.faforever.client.events;
 
-import com.faforever.client.api.PlayerEvent;
+import com.faforever.client.api.dto.PlayerEvent;
 
 import java.util.Map;
 import java.util.concurrent.CompletionStage;

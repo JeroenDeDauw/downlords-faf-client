@@ -1,6 +1,6 @@
 package com.faforever.client.leaderboard;
 
-import com.faforever.client.api.LeaderboardEntry;
+import com.faforever.client.api.dto.LeaderboardEntry;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleFloatProperty;
@@ -22,6 +22,16 @@ public class Ranked1v1EntryBean {
     rating = new SimpleIntegerProperty();
     gamesPlayed = new SimpleIntegerProperty();
     winLossRatio = new SimpleFloatProperty();
+  }
+
+  public static Ranked1v1EntryBean fromLeaderboardEntry(LeaderboardEntry leaderboardEntry) {
+    Ranked1v1EntryBean ranked1v1EntryBean = new Ranked1v1EntryBean();
+    ranked1v1EntryBean.setUsername(leaderboardEntry.getLogin());
+    ranked1v1EntryBean.setGamesPlayed(leaderboardEntry.getNumGames());
+    ranked1v1EntryBean.setRank(leaderboardEntry.getRanking());
+    ranked1v1EntryBean.setRating(leaderboardEntry.getRating());
+    ranked1v1EntryBean.setWinLossRatio(leaderboardEntry.getWonGames() / (float) leaderboardEntry.getNumGames());
+    return ranked1v1EntryBean;
   }
 
   public String getUsername() {
@@ -109,15 +119,5 @@ public class Ranked1v1EntryBean {
     return "Ranked1v1EntryBean{" +
         "username=" + username.get() +
         '}';
-  }
-
-  public static Ranked1v1EntryBean fromLeaderboardEntry(LeaderboardEntry leaderboardEntry) {
-    Ranked1v1EntryBean ranked1v1EntryBean = new Ranked1v1EntryBean();
-    ranked1v1EntryBean.setUsername(leaderboardEntry.getLogin());
-    ranked1v1EntryBean.setGamesPlayed(leaderboardEntry.getNumGames());
-    ranked1v1EntryBean.setRank(leaderboardEntry.getRanking());
-    ranked1v1EntryBean.setRating(leaderboardEntry.getRating());
-    ranked1v1EntryBean.setWinLossRatio(leaderboardEntry.getWonGames() / (float) leaderboardEntry.getNumGames());
-    return ranked1v1EntryBean;
   }
 }

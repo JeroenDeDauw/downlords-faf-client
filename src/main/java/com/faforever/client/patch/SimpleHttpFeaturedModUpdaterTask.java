@@ -1,6 +1,6 @@
 package com.faforever.client.patch;
 
-import com.faforever.client.api.FeaturedModFile;
+import com.faforever.client.api.dto.FeaturedModFile;
 import com.faforever.client.io.ByteCopier;
 import com.faforever.client.mod.FeaturedModBean;
 import com.faforever.client.mod.Mod;

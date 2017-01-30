@@ -1,7 +1,7 @@
 package com.faforever.client.events;
 
 import com.faforever.client.api.FafApiAccessor;
-import com.faforever.client.api.PlayerEvent;
+import com.faforever.client.api.dto.PlayerEvent;
 import com.faforever.client.player.Player;
 import com.faforever.client.player.PlayerService;
 import org.springframework.context.annotation.Lazy;

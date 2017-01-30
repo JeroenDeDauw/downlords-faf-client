@@ -1,5 +1,6 @@
 package com.faforever.client.chat;
 
+import com.faforever.client.FafClientApplication;
 import com.faforever.client.chat.event.ChatMessageEvent;
 import com.faforever.client.config.ClientProperties;
 import com.faforever.client.config.ClientProperties.Irc;
@@ -84,7 +85,7 @@ import static org.apache.commons.lang3.StringUtils.containsIgnoreCase;
 
 @Lazy
 @Service
-@Profile("!local")
+@Profile("!" + FafClientApplication.POFILE_OFFLINE)
 public class PircBotXChatService implements ChatService {
 
   private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -332,7 +333,7 @@ public class PircBotXChatService implements ChatService {
 
   @NotNull
   private String getPassword() {
-    return Hashing.md5().hashString(userService.getPassword(), UTF_8).toString();
+    return Hashing.md5().hashString(Hashing.sha256().hashString(userService.getPassword(), UTF_8).toString(), UTF_8).toString();
   }
 
   private void onSocialMessage(SocialMessage socialMessage) {

@@ -1,6 +1,6 @@
 package com.faforever.client.stats;
 
-import com.faforever.client.api.RatingType;
+import com.faforever.client.api.dto.RatingType;
 import com.faforever.client.domain.RatingHistoryDataPoint;
 import com.faforever.client.remote.FafService;
 import org.springframework.context.annotation.Lazy;

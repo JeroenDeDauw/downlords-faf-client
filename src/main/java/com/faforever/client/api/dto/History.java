@@ -1,13 +1,13 @@
-package com.faforever.client.api;
+package com.faforever.client.api.dto;
 
-import com.google.api.client.util.Key;
+import lombok.Data;
 
-import java.util.*;
+import java.util.List;
 import java.util.Map;
 
+@Data
 public class History {
 
-  @Key("history")
   private java.util.Map<String, List<Float>> data;
 
   public Map<String, List<Float>> getData() {

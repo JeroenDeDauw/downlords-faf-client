@@ -1,7 +1,7 @@
 package com.faforever.client.stats;
 
 
-import com.faforever.client.api.RatingType;
+import com.faforever.client.api.dto.RatingType;
 import com.faforever.client.domain.RatingHistoryDataPoint;
 
 import java.util.List;

@@ -1,5 +1,6 @@
 package com.faforever.client.remote;
 
+import com.faforever.client.FafClientApplication;
 import com.faforever.client.fa.relay.GpgGameMessage;
 import com.faforever.client.game.Faction;
 import com.faforever.client.game.KnownFeaturedMod;
@@ -57,7 +58,7 @@ import static java.util.Collections.singletonList;
 
 @Lazy
 @Component
-@Profile("local")
+@Profile(FafClientApplication.POFILE_OFFLINE)
 // NOSONAR
 public class MockFafServerAccessor implements FafServerAccessor {
 

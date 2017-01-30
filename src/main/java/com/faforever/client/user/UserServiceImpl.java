@@ -54,13 +54,13 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public CompletionStage<Void> login(String username, String password, boolean autoLogin) {
+    this.password = password;
+
     preferencesService.getPreferences().getLogin()
         .setUsername(username)
         .setPassword(password)
         .setAutoLogin(autoLogin);
     preferencesService.storeInBackground();
-
-    this.password = password;
 
     loginFuture = fafService.connectAndLogIn(username, password)
         .thenAccept(loginInfo -> {

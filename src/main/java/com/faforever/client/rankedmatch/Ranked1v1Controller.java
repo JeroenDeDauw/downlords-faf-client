@@ -1,6 +1,6 @@
 package com.faforever.client.rankedmatch;
 
-import com.faforever.client.api.Ranked1v1Stats;
+import com.faforever.client.api.dto.Ranked1v1Stats;
 import com.faforever.client.fx.AbstractViewController;
 import com.faforever.client.game.Faction;
 import com.faforever.client.game.GameService;

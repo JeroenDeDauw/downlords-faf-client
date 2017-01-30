@@ -1,6 +1,6 @@
 package com.faforever.client.coop;
 
-import com.faforever.client.api.CoopLeaderboardEntry;
+import com.faforever.client.api.dto.CoopLeaderboardEntry;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

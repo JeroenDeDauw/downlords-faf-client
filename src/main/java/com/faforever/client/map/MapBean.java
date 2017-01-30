@@ -52,7 +52,7 @@ public class MapBean implements Comparable<MapBean> {
     this.type = new SimpleObjectProperty<>();
   }
 
-  public static MapBean fromMap(com.faforever.client.api.Map map) {
+  public static MapBean fromMap(com.faforever.client.api.dto.Map map) {
     MapBean mapBean = new MapBean();
     mapBean.setDescription(map.getDescription());
     mapBean.setDisplayName(map.getDisplayName());

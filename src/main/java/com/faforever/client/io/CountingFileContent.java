@@ -1,14 +1,12 @@
 package com.faforever.client.io;
 
-import com.google.api.client.http.AbstractInputStreamContent;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
 
-import static com.google.api.client.util.Preconditions.checkNotNull;
 import static java.nio.file.Files.size;
 
 /**
@@ -22,8 +20,10 @@ public class CountingFileContent extends AbstractInputStreamContent {
 
   public CountingFileContent(String type, Path file, ByteCountListener listener) {
     super(type);
-    this.file = checkNotNull(file);
-    this.listener = checkNotNull(listener);
+    this.file = Optional.ofNullable(file)
+        .orElseThrow(() -> new IllegalArgumentException("'file' must not be null"));
+    this.listener = Optional.ofNullable(listener)
+        .orElseThrow(() -> new IllegalArgumentException("'listener' must not be null"));
   }
 
   @Override

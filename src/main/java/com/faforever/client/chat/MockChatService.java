@@ -1,5 +1,6 @@
 package com.faforever.client.chat;
 
+import com.faforever.client.FafClientApplication;
 import com.faforever.client.i18n.I18n;
 import com.faforever.client.net.ConnectionState;
 import com.faforever.client.task.CompletableTask;
@@ -39,7 +40,7 @@ import static com.faforever.client.task.CompletableTask.Priority.HIGH;
 
 @Lazy
 @Service
-@Profile("local")
+@Profile(FafClientApplication.POFILE_OFFLINE)
 // NOSONAR
 public class MockChatService implements ChatService {
 

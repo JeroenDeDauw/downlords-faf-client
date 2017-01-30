@@ -1,6 +1,6 @@
 package com.faforever.client.replay;
 
-import com.faforever.client.api.FeaturedMod;
+import com.faforever.client.api.dto.FeaturedMod;
 
 import java.net.URI;
 import java.util.Collection;

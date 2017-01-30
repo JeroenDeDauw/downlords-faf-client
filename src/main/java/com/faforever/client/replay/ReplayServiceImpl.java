@@ -1,6 +1,6 @@
 package com.faforever.client.replay;
 
-import com.faforever.client.api.FeaturedMod;
+import com.faforever.client.api.dto.FeaturedMod;
 import com.faforever.client.fx.PlatformService;
 import com.faforever.client.game.Game;
 import com.faforever.client.game.GameService;

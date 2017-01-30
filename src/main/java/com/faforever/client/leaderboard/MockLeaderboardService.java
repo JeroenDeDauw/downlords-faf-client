@@ -1,6 +1,7 @@
 package com.faforever.client.leaderboard;
 
-import com.faforever.client.api.Ranked1v1Stats;
+import com.faforever.client.FafClientApplication;
+import com.faforever.client.api.dto.Ranked1v1Stats;
 import com.faforever.client.game.KnownFeaturedMod;
 import com.faforever.client.i18n.I18n;
 import com.faforever.client.task.CompletableTask;
@@ -21,7 +22,7 @@ import static com.faforever.client.task.CompletableTask.Priority.HIGH;
 
 @Lazy
 @Service
-@Profile("local")
+@Profile(FafClientApplication.POFILE_OFFLINE)
 public class MockLeaderboardService implements LeaderboardService {
 
   private final TaskService taskService;

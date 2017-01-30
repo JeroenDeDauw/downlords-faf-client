@@ -1,5 +1,6 @@
 package com.faforever.client.patch;
 
+import com.faforever.client.FafClientApplication;
 import com.faforever.client.mod.FeaturedModBean;
 import com.faforever.client.task.TaskService;
 import org.springframework.context.ApplicationContext;
@@ -14,7 +15,7 @@ import java.util.concurrent.CompletionStage;
 
 @Lazy
 @Component
-@Profile("!local")
+@Profile("!" + FafClientApplication.POFILE_OFFLINE)
 public class SimpleHttpFeaturedModUpdater implements FeaturedModUpdater {
 
   private final TaskService taskService;

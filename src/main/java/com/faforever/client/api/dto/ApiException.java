@@ -1,6 +1,6 @@
-package com.faforever.client.api;
+package com.faforever.client.api.dto;
 
-import com.faforever.client.api.ErrorResponse.Error;
+import com.faforever.client.api.dto.ErrorResponse.Error;
 
 import java.util.stream.Collectors;
 

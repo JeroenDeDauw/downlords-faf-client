@@ -1,5 +1,6 @@
 package com.faforever.client.patch;
 
+import com.faforever.client.FafClientApplication;
 import com.faforever.client.mod.FeaturedModBean;
 import com.faforever.client.preferences.PreferencesService;
 import com.faforever.client.task.TaskService;
@@ -16,7 +17,7 @@ import java.util.concurrent.CompletionStage;
 
 @Lazy
 @Component
-@Profile("!local")
+@Profile("!" + FafClientApplication.POFILE_OFFLINE)
 public class GitRepositoryFeaturedModUpdater implements FeaturedModUpdater {
 
   private static final String NON_WORD_CHARACTER_PATTERN = "[^\\w]";

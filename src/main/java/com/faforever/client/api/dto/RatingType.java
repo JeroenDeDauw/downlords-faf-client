@@ -1,4 +1,4 @@
-package com.faforever.client.api;
+package com.faforever.client.api.dto;
 
 public enum RatingType {
   GLOBAL("global"),

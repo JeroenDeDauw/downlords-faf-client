@@ -1,5 +1,16 @@
 package com.faforever.client.api;
 
+import com.faforever.client.FafClientApplication;
+import com.faforever.client.api.dto.AchievementDefinition;
+import com.faforever.client.api.dto.AchievementType;
+import com.faforever.client.api.dto.CoopLeaderboardEntry;
+import com.faforever.client.api.dto.FeaturedMod;
+import com.faforever.client.api.dto.FeaturedModFile;
+import com.faforever.client.api.dto.History;
+import com.faforever.client.api.dto.PlayerAchievement;
+import com.faforever.client.api.dto.PlayerEvent;
+import com.faforever.client.api.dto.Ranked1v1Stats;
+import com.faforever.client.api.dto.RatingType;
 import com.faforever.client.coop.CoopMission;
 import com.faforever.client.io.ByteCountListener;
 import com.faforever.client.leaderboard.Ranked1v1EntryBean;
@@ -19,7 +30,7 @@ import java.util.List;
 
 @Lazy
 @Component
-@Profile("local")
+@Profile(FafClientApplication.POFILE_OFFLINE)
 // NOSONAR
 public class MockFafApiAccessor implements FafApiAccessor {
 
@@ -55,14 +66,14 @@ public class MockFafApiAccessor implements FafApiAccessor {
   @Override
   public List<Mod> getMods() {
     return Arrays.asList(
-        Mod.fromModInfo(new com.faforever.client.api.Mod("1-1-1", "Mod Number One", "Mod description Apple", "Mock", LocalDateTime.now())),
-        Mod.fromModInfo(new com.faforever.client.api.Mod("2-2-2", "Mod Number Two", "Mod description Banana", "Mock", LocalDateTime.now())),
-        Mod.fromModInfo(new com.faforever.client.api.Mod("3-3-3", "Mod Number Three", "Mod description Citrus", "Mock", LocalDateTime.now())),
-        Mod.fromModInfo(new com.faforever.client.api.Mod("4-4-4", "Mod Number Four", "Mod description Date", "Mock", LocalDateTime.now())),
-        Mod.fromModInfo(new com.faforever.client.api.Mod("5-5-5", "Mod Number Five", "Mod description Elderberry", "Mock", LocalDateTime.now())),
-        Mod.fromModInfo(new com.faforever.client.api.Mod("6-6-6", "Mod Number Six", "Mod description Fig", "Mock", LocalDateTime.now())),
-        Mod.fromModInfo(new com.faforever.client.api.Mod("7-7-7", "Mod Number Seven", "Mod description Garlic", "Mock", LocalDateTime.now())),
-        Mod.fromModInfo(new com.faforever.client.api.Mod("8-8-8", "Mod Number Eight", "Mod description Haricot bean", "Mock", LocalDateTime.now()))
+        Mod.fromModInfo(new com.faforever.client.api.dto.Mod("1-1-1", "Mod Number One", "Mod description Apple", "Mock", LocalDateTime.now())),
+        Mod.fromModInfo(new com.faforever.client.api.dto.Mod("2-2-2", "Mod Number Two", "Mod description Banana", "Mock", LocalDateTime.now())),
+        Mod.fromModInfo(new com.faforever.client.api.dto.Mod("3-3-3", "Mod Number Three", "Mod description Citrus", "Mock", LocalDateTime.now())),
+        Mod.fromModInfo(new com.faforever.client.api.dto.Mod("4-4-4", "Mod Number Four", "Mod description Date", "Mock", LocalDateTime.now())),
+        Mod.fromModInfo(new com.faforever.client.api.dto.Mod("5-5-5", "Mod Number Five", "Mod description Elderberry", "Mock", LocalDateTime.now())),
+        Mod.fromModInfo(new com.faforever.client.api.dto.Mod("6-6-6", "Mod Number Six", "Mod description Fig", "Mock", LocalDateTime.now())),
+        Mod.fromModInfo(new com.faforever.client.api.dto.Mod("7-7-7", "Mod Number Seven", "Mod description Garlic", "Mock", LocalDateTime.now())),
+        Mod.fromModInfo(new com.faforever.client.api.dto.Mod("8-8-8", "Mod Number Eight", "Mod description Haricot bean", "Mock", LocalDateTime.now()))
     );
   }
 
@@ -103,7 +114,7 @@ public class MockFafApiAccessor implements FafApiAccessor {
   }
 
   @Override
-  public List<MapBean> getMaps() {
+  public List<MapBean> getAllMaps() {
     return Collections.emptyList();
   }
 

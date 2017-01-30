@@ -1,6 +1,6 @@
 package com.faforever.client.stats;
 
-import com.faforever.client.api.RatingType;
+import com.faforever.client.api.dto.RatingType;
 import com.faforever.client.remote.FafService;
 import org.junit.Before;
 import org.junit.Test;

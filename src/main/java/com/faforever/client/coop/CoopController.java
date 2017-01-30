@@ -1,6 +1,6 @@
 package com.faforever.client.coop;
 
-import com.faforever.client.api.CoopLeaderboardEntry;
+import com.faforever.client.api.dto.CoopLeaderboardEntry;
 import com.faforever.client.fx.Controller;
 import com.faforever.client.fx.NodeTableCell;
 import com.faforever.client.fx.StringCell;
