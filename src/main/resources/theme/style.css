@@ -1232,7 +1232,7 @@
 }
 
 .main-navigation-button:highlighted {
-  -fx-background-color:rgb(43,255,100);
+  -fx-background-color: -fx-accent;
   -fx-text-fill: black;
 }
 

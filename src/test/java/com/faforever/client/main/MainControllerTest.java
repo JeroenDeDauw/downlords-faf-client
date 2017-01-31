@@ -1,13 +1,10 @@
 package com.faforever.client.main;
 
 import com.faforever.client.chat.ChatController;
-import com.faforever.client.chat.ChatMessage;
-import com.faforever.client.chat.event.UnreadPrivateMessageEvent;
 import com.faforever.client.config.ClientProperties;
 import com.faforever.client.fx.WindowController;
 import com.faforever.client.game.GameService;
 import com.faforever.client.i18n.I18n;
-import com.faforever.client.leaderboard.LeaderboardController;
 import com.faforever.client.login.LoginController;
 import com.faforever.client.notification.NotificationService;
 import com.faforever.client.notification.PersistentNotificationsController;
@@ -15,7 +12,6 @@ import com.faforever.client.notification.TransientNotification;
 import com.faforever.client.notification.TransientNotificationsController;
 import com.faforever.client.player.PlayerBuilder;
 import com.faforever.client.player.PlayerService;
-import com.faforever.client.preferences.ForgedAlliancePrefs;
 import com.faforever.client.preferences.NotificationsPrefs;
 import com.faforever.client.preferences.Preferences;
 import com.faforever.client.preferences.PreferencesService;
@@ -33,7 +29,6 @@ import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -57,7 +52,6 @@ import java.util.function.Consumer;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
@@ -77,8 +71,6 @@ public class MainControllerTest extends AbstractPlainJavaFxTest {
   @Mock
   private PreferencesService preferencesService;
   @Mock
-  private LeaderboardController leaderboardController;
-  @Mock
   private PlayerService playerService;
   @Mock
   private SettingsController settingsController;
@@ -90,8 +82,6 @@ public class MainControllerTest extends AbstractPlainJavaFxTest {
   private WindowPrefs mainWindowPrefs;
   @Mock
   private NotificationService notificationService;
-  @Mock
-  private ForgedAlliancePrefs forgedAlliancePrefs;
   @Mock
   private ClientUpdateService clientUpdateService;
   @Mock
@@ -223,7 +213,7 @@ public class MainControllerTest extends AbstractPlainJavaFxTest {
   }
 
   @Test
-  public void onChat() throws Exception {
+  public void testOnChat() throws Exception {
     instance.chatButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("highlighted"), true);
     instance.onChat(new ActionEvent(instance.chatButton, Event.NULL_SOURCE_TARGET));
     assertThat(instance.chatButton.getPseudoClassStates().contains(PseudoClass.getPseudoClass("highlighted")), is(false));
@@ -232,7 +222,7 @@ public class MainControllerTest extends AbstractPlainJavaFxTest {
 
   private void prepareTestMatchmakerMessageTest(float deviation) {
     @SuppressWarnings("unchecked")
-    ArgumentCaptor<Consumer<MatchmakerMessage>> matchmakerMessageCaptor = ArgumentCaptor.forClass((Class) Consumer.class);
+    ArgumentCaptor<Consumer<MatchmakerMessage>> matchmakerMessageCaptor = ArgumentCaptor.forClass(Consumer.class);
     when(notificationPrefs.isRanked1v1ToastEnabled()).thenReturn(true);
     when(playerService.getCurrentPlayer()).thenReturn(
         PlayerBuilder.create("JUnit").leaderboardRatingMean(1500).leaderboardRatingDeviation(deviation).get()

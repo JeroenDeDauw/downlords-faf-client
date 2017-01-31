@@ -1,9 +1,11 @@
 package com.faforever.client.chat;
 
 import com.faforever.client.audio.AudioService;
+import com.faforever.client.chat.event.UnreadPrivateMessageEvent;
 import com.faforever.client.fx.PlatformService;
 import com.faforever.client.fx.WebViewConfigurer;
 import com.faforever.client.i18n.I18n;
+import com.faforever.client.main.NavigationItem;
 import com.faforever.client.notification.NotificationService;
 import com.faforever.client.player.Player;
 import com.faforever.client.player.PlayerService;
@@ -99,6 +101,8 @@ public class PrivateChatTabController extends AbstractChatTabController {
       showNotificationIfNecessary(chatMessage);
       setUnread(true);
       incrementUnreadMessagesCount(1);
+      boolean chatFocused = preferencesService.getPreferences().getMainWindow().getLastView().equals(NavigationItem.CHAT.name());
+      eventBus.post(new UnreadPrivateMessageEvent(chatMessage, chatFocused));
     }
   }
 
