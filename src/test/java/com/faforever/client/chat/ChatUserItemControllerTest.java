@@ -70,7 +70,7 @@ public class ChatUserItemControllerTest extends AbstractPlainJavaFxTest {
 
   @Before
   public void setUp() throws Exception {
-    instance = new ChatUserItemController(preferencesService, avatarService, countryFlagService, chatService, i18n, uiService, joinGameHelper, eventBus, clanService, playerService, platformService, "http://clans.faforever.com/clan_");
+    instance = new ChatUserItemController(preferencesService, avatarService, countryFlagService, chatService, i18n, uiService, joinGameHelper, eventBus, clanService, playerService, platformService);
 
     Preferences preferences = new Preferences();
     when(preferencesService.getPreferences()).thenReturn(preferences);
@@ -275,6 +275,7 @@ public class ChatUserItemControllerTest extends AbstractPlainJavaFxTest {
   public void testOnMouseEnteredTag() throws Exception {
     instance.clanMenu.setVisible(false);
     instance.clanLabel.setVisible(true);
+    instance.setPlayer(PlayerBuilder.create("junit").defaultValues().get());
     instance.onMouseEnterTag();
     assertThat(instance.clanMenu.getPrefWidth(), not(0.0));
     assertThat(instance.clanLabel.getPrefWidth(), is(0.0));

@@ -1,6 +1,9 @@
 package com.faforever.client.chat;
 
 import com.faforever.client.audio.AudioService;
+import com.faforever.client.clan.Clan;
+import com.faforever.client.clan.ClanService;
+import com.faforever.client.clan.ClanTooltipController;
 import com.faforever.client.fx.PlatformService;
 import com.faforever.client.fx.WebViewConfigurer;
 import com.faforever.client.i18n.I18n;
@@ -31,6 +34,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.bridj.Platform;
+import org.hamcrest.CoreMatchers;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Rule;
 import org.junit.Test;
@@ -92,11 +96,19 @@ public class AbstractChatTabControllerTest extends AbstractPlainJavaFxTest {
   @Mock
   private UiService uiService;
   @Mock
+  private ClanService clanService;
+  @Mock
+  private ReportingService reportingService;
+  @Mock
+  private EventBus eventBus;
+  @Mock
   private WebViewConfigurer webViewConfigurer;
   @Mock
   private ReportingService reportingService;
   @Mock
   private EventBus eventBus;
+
+
 
   private Preferences preferences;
   private AbstractChatTabController instance;
@@ -105,10 +117,12 @@ public class AbstractChatTabControllerTest extends AbstractPlainJavaFxTest {
   @Override
   public void start(Stage stage) throws Exception {
     super.start(stage);
-
-    instance = new AbstractChatTabController(userService, chatService, platformService, preferencesService, playerService,
-        audioService, timeService, i18n, imageUploadService, urlPreviewResolver, notificationService, reportingService,
-        uiService, autoCompletionHelper, eventBus, webViewConfigurer) {
+    stage = new Stage();
+    instance = new AbstractChatTabController(clanService, webViewConfigurer, userService,
+        chatService, platformService, preferencesService, playerService,
+        audioService, timeService, i18n, imageUploadService,
+        urlPreviewResolver, notificationService, reportingService,
+        stage, uiService, autoCompletionHelper, eventBus) {
       private final Tab root = new Tab();
       private final WebView webView = new WebView();
       private final TextInputControl messageTextField = new TextField();
@@ -129,11 +143,17 @@ public class AbstractChatTabControllerTest extends AbstractPlainJavaFxTest {
       }
     };
 
+
     TabPane tabPane = new TabPane(instance.getRoot());
     getRoot().getChildren().setAll(tabPane);
 
     preferences = new Preferences();
 
+    Clan clan = new Clan();
+    clan.setClanId("1234");
+
+    when(clanService.getClanByTag("xyz")).thenReturn(clan);
+    when(uiService.loadFxml("theme/chat/clan_tooltip.fxml")).thenReturn(mock(ClanTooltipController.class));
     when(uiService.getThemeFileUrl(any())).thenReturn(getClass().getResource("/theme/chat/chat_section.html"));
     when(timeService.asShortTime(any())).thenReturn("123");
     when(userService.getUsername()).thenReturn("junit");
@@ -180,6 +200,30 @@ public class AbstractChatTabControllerTest extends AbstractPlainJavaFxTest {
     verify(chatService).sendMessageInBackground(receiver, message);
     assertThat(instance.getMessageTextField().getText(), is(message));
     assertThat(instance.getMessageTextField().isDisable(), is(false));
+  }
+
+  @Test
+  public void testHideClanInfo() throws Exception {
+    instance.clanInfo("xyz");
+    instance.hideClanInfo();
+    assertThat(instance.clanInfoPopup, is(CoreMatchers.nullValue()));
+  }
+
+  @Test
+  public void testShowClanInfo() throws Exception {
+    instance.clanInfo("xyz");
+    WaitForAsyncUtils.waitForFxEvents();
+    assertThat(instance.clanInfoPopup, CoreMatchers.notNullValue());
+  }
+
+  @Test
+  public void testShowClanWebsite() throws Exception {
+    Clan clan = new Clan();
+    clan.setClanId("1234");
+    instance.showClanWebsite("xyz");
+    when(clanService.getClanByTag("xyz")).thenReturn(clan);
+    verify(clanService).getUrlOfClanWebsite(clan);
+    verify(platformService).showDocument(any());
   }
 
   @Test

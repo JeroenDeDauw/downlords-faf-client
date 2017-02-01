@@ -1,5 +1,6 @@
 package com.faforever.client.clan;
 
+import com.faforever.client.fx.PlatformService;
 import com.faforever.client.remote.FafService;
 import com.faforever.client.test.AbstractPlainJavaFxTest;
 import javafx.collections.FXCollections;
@@ -17,10 +18,12 @@ public class ClanServiceImplTest extends AbstractPlainJavaFxTest {
   private ClanServiceImpl instance;
   @Mock
   private FafService fafService;
+  @Mock
+  private PlatformService platformService;
 
   @Before
   public void setUp() throws Exception {
-    instance = new ClanServiceImpl(fafService);
+    instance = new ClanServiceImpl(fafService, platformService, "http://clans.faforever.com/clan_");
     Clan testClan = new Clan();
     testClan.setClanName("test1");
     testClan.setClanTag("XXX");

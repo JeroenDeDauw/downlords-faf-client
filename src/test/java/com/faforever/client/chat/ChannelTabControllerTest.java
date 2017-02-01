@@ -1,5 +1,6 @@
 package com.faforever.client.chat;
 
+import com.faforever.client.clan.ClanService;
 import com.faforever.client.audio.AudioService;
 import com.faforever.client.fx.PlatformService;
 import com.faforever.client.fx.WebViewConfigurer;
@@ -16,6 +17,7 @@ import com.faforever.client.theme.UiService;
 import com.faforever.client.uploader.ImageUploadService;
 import com.faforever.client.user.UserService;
 import com.faforever.client.util.TimeService;
+import javafx.application.Platform;
 import com.google.common.eventbus.EventBus;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
@@ -25,6 +27,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -64,27 +67,38 @@ public class ChannelTabControllerTest extends AbstractPlainJavaFxTest {
   @Mock
   private UserService userService;
   @Mock
-  private ImageUploadService imageUploadService;
+  private PreferencesService preferencesService;
   @Mock
   private PlayerService playerService;
   @Mock
+  private PlatformService platformService;
+  @Mock
+  private UrlPreviewResolver urlPreviewResolver;
+  @Mock
   private TimeService timeService;
   @Mock
-  private PreferencesService preferencesService;
+  private AudioService audioService;
   @Mock
-  private PlatformService platformService;
+  private ImageUploadService imageUploadService;
   @Mock
   private I18n i18n;
   @Mock
   private NotificationService notificationService;
   @Mock
-  private ThreadPoolExecutor threadPoolExecutor;
-  @Mock
-  private ScheduledExecutorService scheduledExecutorService;
-  @Mock
   private AutoCompletionHelper autoCompletionHelper;
   @Mock
   private UiService uiService;
+  @Mock
+  private ClanService clanService;
+  @Mock
+  private ReportingService reportingService;
+  @Mock
+  private EventBus eventBus;
+  private Stage stage;
+  @Mock
+  private ThreadPoolExecutor threadPoolExecutor;
+  @Mock
+  private ScheduledExecutorService scheduledExecutorService;
   @Mock
   private UserFilterController userFilterController;
   @Mock
@@ -102,10 +116,15 @@ public class ChannelTabControllerTest extends AbstractPlainJavaFxTest {
 
   @Before
   public void setUp() throws Exception {
-    instance = new ChannelTabController(
-        userService, chatService, platformService, preferencesService, playerService, audioService, timeService, i18n,
-        imageUploadService, urlPreviewResolver, notificationService, reportingService, uiService,
-        autoCompletionHelper, eventBus, webViewConfigurer, threadPoolExecutor, scheduledExecutorService);
+    Platform.runLater(() -> stage = new Stage());
+    WaitForAsyncUtils.waitForFxEvents();
+    instance = new ChannelTabController(clanService, webViewConfigurer, userService, chatService,
+        platformService, preferencesService, playerService,
+        audioService, timeService, i18n, imageUploadService,
+        urlPreviewResolver, notificationService, reportingService,
+        stage, uiService, autoCompletionHelper,
+        eventBus, threadPoolExecutor, scheduledExecutorService);
+
 
     when(preferencesService.getPreferences()).thenReturn(new Preferences());
     when(userService.getUsername()).thenReturn(USER_NAME);

@@ -1,6 +1,7 @@
 package com.faforever.client.chat;
 
 import com.faforever.client.audio.AudioService;
+import com.faforever.client.clan.ClanService;
 import com.faforever.client.fx.PlatformService;
 import com.faforever.client.fx.WebViewConfigurer;
 import com.faforever.client.i18n.I18n;
@@ -20,6 +21,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -40,9 +42,18 @@ public class PrivateChatTabController extends AbstractChatTabController {
   private boolean userOffline;
 
   @Inject
-  public PrivateChatTabController(UserService userService, ChatService chatService, PlatformService platformService, PreferencesService preferencesService, PlayerService playerService, AudioService audioService, TimeService timeService, I18n i18n, ImageUploadService imageUploadService, UrlPreviewResolver urlPreviewResolver, NotificationService notificationService, ReportingService reportingService, UiService uiService, AutoCompletionHelper autoCompletionHelper, EventBus eventBus, WebViewConfigurer webViewConfigurer, ThreadPoolExecutor threadPoolExecutor) {
-    super(userService, chatService, platformService, preferencesService, playerService, audioService, timeService, i18n, imageUploadService, urlPreviewResolver, notificationService, reportingService, uiService, autoCompletionHelper, eventBus, webViewConfigurer);
+  public PrivateChatTabController(ClanService clanService, WebViewConfigurer webViewConfigurer,
+                                  UserService userService, ChatService chatService,
+                                  PlatformService platformService, PreferencesService preferencesService,
+                                  PlayerService playerService, AudioService audioService,
+                                  TimeService timeService, I18n i18n,
+                                  ImageUploadService imageUploadService, UrlPreviewResolver urlPreviewResolver,
+                                  NotificationService notificationService, ReportingService reportingService,
+                                  Stage stage, UiService uiService, AutoCompletionHelper autoCompletionHelper,
+                                  EventBus eventBus) {
+    super(clanService, webViewConfigurer, userService, chatService, platformService, preferencesService, playerService, audioService, timeService, i18n, imageUploadService, urlPreviewResolver, notificationService, reportingService, stage, uiService, autoCompletionHelper, eventBus);
   }
+
 
   boolean isUserOffline() {
     return userOffline;

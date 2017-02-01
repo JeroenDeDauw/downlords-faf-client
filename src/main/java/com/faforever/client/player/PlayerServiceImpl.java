@@ -158,7 +158,6 @@ public class PlayerServiceImpl implements PlayerService {
 
   @Override
   public Player getPlayerForUsername(String username) {
-
     return playersByName.get(username);
   }
 

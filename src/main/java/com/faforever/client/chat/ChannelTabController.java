@@ -1,5 +1,6 @@
 package com.faforever.client.chat;
 
+import com.faforever.client.clan.ClanService;
 import com.faforever.client.audio.AudioService;
 import com.faforever.client.fx.JavaFxUtil;
 import com.faforever.client.fx.PlatformService;
@@ -41,6 +42,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import javafx.stage.Popup;
 import javafx.stage.PopupWindow;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -101,13 +103,22 @@ public class ChannelTabController extends AbstractChatTabController {
   private UserFilterController userFilterController;
 
   @Inject
-  public ChannelTabController(UserService userService, ChatService chatService, PlatformService platformService, PreferencesService preferencesService, PlayerService playerService, AudioService audioService, TimeService timeService, I18n i18n, ImageUploadService imageUploadService, UrlPreviewResolver urlPreviewResolver, NotificationService notificationService, ReportingService reportingService, UiService uiService, AutoCompletionHelper autoCompletionHelper, EventBus eventBus, WebViewConfigurer webViewConfigurer, ThreadPoolExecutor threadPoolExecutor, ScheduledExecutorService scheduledExecutorService) {
-    super(userService, chatService, platformService, preferencesService, playerService, audioService, timeService, i18n, imageUploadService, urlPreviewResolver, notificationService, reportingService, uiService, autoCompletionHelper, eventBus, webViewConfigurer);
+  public ChannelTabController(ClanService clanService, WebViewConfigurer webViewConfigurer,
+                              UserService userService, ChatService chatService,
+                              PlatformService platformService, PreferencesService preferencesService,
+                              PlayerService playerService, AudioService audioService, TimeService timeService,
+                              I18n i18n, ImageUploadService imageUploadService, UrlPreviewResolver urlPreviewResolver,
+                              NotificationService notificationService, ReportingService reportingService,
+                              Stage stage, UiService uiService,
+                              AutoCompletionHelper autoCompletionHelper, EventBus eventBus,
+                              ThreadPoolExecutor threadPoolExecutor, ScheduledExecutorService scheduledExecutorService) {
 
+    super(clanService, webViewConfigurer, userService, chatService, platformService, preferencesService, playerService, audioService, timeService, i18n, imageUploadService, urlPreviewResolver, notificationService, reportingService, stage, uiService, autoCompletionHelper, eventBus);
     userToChatUserControls = FXCollections.observableMap(new ConcurrentHashMap<>());
     this.threadPoolExecutor = threadPoolExecutor;
     this.scheduledExecutorService = scheduledExecutorService;
   }
+
 
   // TODO clean this up
   public Map<String, Map<Pane, ChatUserItemController>> getUserToChatUserControls() {

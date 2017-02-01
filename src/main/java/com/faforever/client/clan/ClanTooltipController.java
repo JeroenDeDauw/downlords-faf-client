@@ -18,6 +18,9 @@ public class ClanTooltipController implements com.faforever.client.fx.Controller
   public Label clanLeader;
 
   public void setClan(Clan clan) {
+    if (clan.getDescription() == null) {
+      clan.setDescription("-");
+    }
     clanName.setText(clan.getClanName());
     clanDescription.setText(clan.getDescription());
     clanLeader.setText(clan.getLeaderName());

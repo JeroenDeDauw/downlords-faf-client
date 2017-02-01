@@ -41,7 +41,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.PopupWindow;
 import org.jetbrains.annotations.Nullable;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -76,8 +75,8 @@ public class ChatUserItemController implements Controller<Node> {
   private final JoinGameHelper joinGameHelper;
   private final EventBus eventBus;
   private final PlayerService playerService;
-  private final PlatformService platformService;
   private final ClanService clanService;
+  private final PlatformService platformService;
   public Pane chatUserItemRoot;
   public ImageView countryImageView;
   public ImageView avatarImageView;
@@ -95,7 +94,6 @@ public class ChatUserItemController implements Controller<Node> {
   private ChangeListener<PlayerStatus> gameStatusChangeListener;
   private InvalidationListener userActivityListener;
   private Clan clan;
-  private String baseClanWebsite;
   private boolean closedByClick = false;
 
 
@@ -104,10 +102,10 @@ public class ChatUserItemController implements Controller<Node> {
   public ChatUserItemController(PreferencesService preferencesService, AvatarService avatarService,
                                 CountryFlagService countryFlagService, ChatService chatService,
                                 I18n i18n, UiService uiService,
-                                JoinGameHelper joinGameHelper, EventBus eventBus, ClanService clanService,
-                                PlayerService playerService, PlatformService platformService,
-                                @Value("${clan.clanWebpagesBaseUrl}") String baseClanWebsite) {
-
+                                JoinGameHelper joinGameHelper, EventBus eventBus,
+                                ClanService clanService, PlayerService playerService,
+                                PlatformService platformService) {
+    this.platformService = platformService;
     this.preferencesService = preferencesService;
     this.avatarService = avatarService;
     this.playerService = playerService;
@@ -118,9 +116,6 @@ public class ChatUserItemController implements Controller<Node> {
     this.uiService = uiService;
     this.joinGameHelper = joinGameHelper;
     this.eventBus = eventBus;
-    this.platformService = platformService;
-    this.baseClanWebsite = baseClanWebsite;
-
   }
 
   public void initialize() {
@@ -238,6 +233,7 @@ public class ChatUserItemController implements Controller<Node> {
   private void setClanTag(String newValue) {
     if (StringUtils.isEmpty(newValue)) {
       clanLabel.setVisible(false);
+      clanMenu.setVisible(false);
       return;
     }
     if (usernameLabel.getTooltip() != null || clanMenu.getTooltip() != null) {
@@ -370,9 +366,6 @@ public class ChatUserItemController implements Controller<Node> {
 
       Tooltip clanTooltip = new Tooltip();
       clanMenu.setTooltip(clanTooltip);
-      if (clan.getDescription() == null) {
-        clan.setDescription("-");
-      }
       ClanTooltipController clanTooltipController = uiService.loadFxml("theme/chat/clan_tooltip.fxml");
       clanTooltipController.setClan(clan);
       clanTooltip.setMaxHeight(clanTooltipController.getRoot().getHeight());
@@ -380,7 +373,7 @@ public class ChatUserItemController implements Controller<Node> {
 
       MenuItem page = new MenuItem(i18n.get("clan.visitPage"));
       page.setOnAction(event -> {
-        platformService.showDocument(String.format(baseClanWebsite, clan.getClanId()));
+        platformService.showDocument(clanService.getUrlOfClanWebsite(clan));
         // TODO: Could be viewed in clan section (if implemented)
       });
       clanMenu.getItems().add(0, page);
@@ -439,6 +432,9 @@ public class ChatUserItemController implements Controller<Node> {
 
   public void onMouseEnterTag() {
     onMouseEnterUsername();
+    if (clan == null | player.getClan().isEmpty()) {
+      return;
+    }
     inflate(clanMenu);
     deflate(clanLabel);
   }
@@ -454,7 +450,7 @@ public class ChatUserItemController implements Controller<Node> {
   private void inflate(Control control) {
     control.setMinWidth(Region.USE_PREF_SIZE);
     control.setMaxHeight(Region.USE_PREF_SIZE);
-    control.setPrefWidth(Region.USE_PREF_SIZE);
+    control.setPrefWidth(Region.USE_COMPUTED_SIZE);
     control.setVisible(true);
   }
 

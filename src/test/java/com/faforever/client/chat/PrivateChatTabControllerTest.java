@@ -1,6 +1,7 @@
 package com.faforever.client.chat;
 
 import com.faforever.client.audio.AudioService;
+import com.faforever.client.clan.ClanService;
 import com.faforever.client.fx.PlatformService;
 import com.faforever.client.fx.WebViewConfigurer;
 import com.faforever.client.i18n.I18n;
@@ -19,10 +20,12 @@ import com.faforever.client.user.UserService;
 import com.faforever.client.util.TimeService;
 import com.google.common.eventbus.EventBus;
 import com.sun.javafx.scene.control.skin.TabPaneSkin;
+import javafx.application.Platform;
 import javafx.scene.control.TabPane;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.mockito.Mock;
 import org.testfx.util.WaitForAsyncUtils;
 
@@ -41,51 +44,61 @@ public class PrivateChatTabControllerTest extends AbstractPlainJavaFxTest {
   private PrivateChatTabController instance;
   private String playerName;
 
-  @Mock
-  private PreferencesService preferencesService;
-  @Mock
-  private Preferences preferences;
-  @Mock
-  private ChatPrefs chatPrefs;
-  @Mock
-  private PlayerService playerService;
-  @Mock
-  private AudioService audioService;
-  @Mock
-  private NotificationService notificationService;
-  @Mock
-  private I18n i18n;
-  @Mock
-  private WebViewConfigurer webViewConfigurer;
+  public TemporaryFolder tempDir = new TemporaryFolder();
   @Mock
   private ChatService chatService;
   @Mock
   private UserService userService;
   @Mock
+  private PreferencesService preferencesService;
+  @Mock
+  private PlayerService playerService;
+  @Mock
   private PlatformService platformService;
-  @Mock
-  private TimeService timeService;
-  @Mock
-  private ImageUploadService imageUploadService;
   @Mock
   private UrlPreviewResolver urlPreviewResolver;
   @Mock
-  private ReportingService reportingService;
+  private TimeService timeService;
   @Mock
-  private UiService uiService;
+  private AudioService audioService;
+  @Mock
+  private ImageUploadService imageUploadService;
+  @Mock
+  private I18n i18n;
+  @Mock
+  private NotificationService notificationService;
   @Mock
   private AutoCompletionHelper autoCompletionHelper;
   @Mock
+  private UiService uiService;
+  @Mock
+  private WebViewConfigurer webViewConfigurer;
+  @Mock
+  private ClanService clanService;
+  @Mock
+  private ReportingService reportingService;
+  @Mock
   private EventBus eventBus;
   @Mock
-  private ThreadPoolExecutor threadPoolExecutor;
+  private Stage stage;
+  @Mock
+  private Preferences preferences;
+  @Mock
+  private ChatPrefs chatPrefs;
+
+  private PrivateChatTabController instance;
+  private String playerName;
 
   @Before
   public void setUp() throws IOException {
-    instance = new PrivateChatTabController(userService, chatService, platformService, preferencesService, playerService,
-        audioService, timeService, i18n, imageUploadService, urlPreviewResolver, notificationService, reportingService,
-        uiService, autoCompletionHelper, eventBus, webViewConfigurer, threadPoolExecutor
-    );
+    Platform.runLater(() -> stage = new Stage());
+    WaitForAsyncUtils.waitForFxEvents();
+    instance = new PrivateChatTabController(clanService, webViewConfigurer,
+        userService, chatService,
+        platformService, preferencesService, playerService,
+        audioService, timeService, i18n, imageUploadService,
+        urlPreviewResolver, notificationService, reportingService,
+        stage, uiService, autoCompletionHelper, eventBus);
 
     playerName = "testUser";
     Player player = new Player(playerName);
