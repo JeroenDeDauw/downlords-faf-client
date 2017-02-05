@@ -22,6 +22,7 @@ import com.google.common.eventbus.EventBus;
 import com.sun.javafx.scene.control.skin.TabPaneSkin;
 import javafx.application.Platform;
 import javafx.scene.control.TabPane;
+import javafx.stage.Stage;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -31,7 +32,6 @@ import org.testfx.util.WaitForAsyncUtils;
 
 import java.io.IOException;
 import java.time.Instant;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -41,8 +41,6 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 public class PrivateChatTabControllerTest extends AbstractPlainJavaFxTest {
-  private PrivateChatTabController instance;
-  private String playerName;
 
   public TemporaryFolder tempDir = new TemporaryFolder();
   @Mock

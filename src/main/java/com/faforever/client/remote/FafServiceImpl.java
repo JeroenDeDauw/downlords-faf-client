@@ -1,6 +1,5 @@
 package com.faforever.client.remote;
 
-import com.faforever.client.api.Clan;
 import com.faforever.client.api.AchievementDefinition;
 import com.faforever.client.api.CoopLeaderboardEntry;
 import com.faforever.client.api.FafApiAccessor;

@@ -1,6 +1,5 @@
 package com.faforever.client.clan;
 
-import com.faforever.client.fx.PlatformService;
 import com.faforever.client.remote.FafService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +24,6 @@ import static com.github.nocatch.NoCatch.noCatch;
 public class ClanServiceImpl implements ClanService {
   private static final org.slf4j.Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
   private final FafService fafService;
-  private final PlatformService platformService;
   private final String baseClanWebsite;
 
 
@@ -33,10 +31,9 @@ public class ClanServiceImpl implements ClanService {
   private Future<ConcurrentHashMap<String, Clan>> clanByTagFuture;
 
   @Inject
-  public ClanServiceImpl(FafService fafService, PlatformService platformService,
+  public ClanServiceImpl(FafService fafService,
                          @Value("${clan.clanWebpagesBaseUrl}") String baseClanWebsite) {
     this.fafService = fafService;
-    this.platformService = platformService;
     this.baseClanWebsite = baseClanWebsite;
 
   }

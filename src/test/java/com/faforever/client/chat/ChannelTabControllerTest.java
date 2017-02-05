@@ -1,7 +1,7 @@
 package com.faforever.client.chat;
 
-import com.faforever.client.clan.ClanService;
 import com.faforever.client.audio.AudioService;
+import com.faforever.client.clan.ClanService;
 import com.faforever.client.fx.PlatformService;
 import com.faforever.client.fx.WebViewConfigurer;
 import com.faforever.client.i18n.I18n;
@@ -17,8 +17,8 @@ import com.faforever.client.theme.UiService;
 import com.faforever.client.uploader.ImageUploadService;
 import com.faforever.client.user.UserService;
 import com.faforever.client.util.TimeService;
-import javafx.application.Platform;
 import com.google.common.eventbus.EventBus;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.MapChangeListener.Change;
@@ -73,11 +73,7 @@ public class ChannelTabControllerTest extends AbstractPlainJavaFxTest {
   @Mock
   private PlatformService platformService;
   @Mock
-  private UrlPreviewResolver urlPreviewResolver;
-  @Mock
   private TimeService timeService;
-  @Mock
-  private AudioService audioService;
   @Mock
   private ImageUploadService imageUploadService;
   @Mock
@@ -90,11 +86,6 @@ public class ChannelTabControllerTest extends AbstractPlainJavaFxTest {
   private UiService uiService;
   @Mock
   private ClanService clanService;
-  @Mock
-  private ReportingService reportingService;
-  @Mock
-  private EventBus eventBus;
-  private Stage stage;
   @Mock
   private ThreadPoolExecutor threadPoolExecutor;
   @Mock
@@ -113,6 +104,8 @@ public class ChannelTabControllerTest extends AbstractPlainJavaFxTest {
   private ReportingService reportingService;
   @Mock
   private EventBus eventBus;
+
+  private Stage stage;
 
   @Before
   public void setUp() throws Exception {
@@ -208,7 +201,7 @@ public class ChannelTabControllerTest extends AbstractPlainJavaFxTest {
     Channel channel = new Channel(CHANNEL_NAME);
     instance.setChannel(channel);
 
-    ArgumentCaptor<MapChangeListener<String, ChatUser>> captor = ArgumentCaptor.forClass((Class) MapChangeListener.class);
+    ArgumentCaptor<MapChangeListener<String, ChatUser>> captor = ArgumentCaptor.forClass(MapChangeListener.class);
     verify(chatService).addUsersListener(anyString(), captor.capture());
 
     ChatUser chatUser = new ChatUser("junit", null);

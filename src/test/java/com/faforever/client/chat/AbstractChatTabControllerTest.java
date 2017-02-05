@@ -67,6 +67,7 @@ import static org.mockito.Mockito.when;
 public class AbstractChatTabControllerTest extends AbstractPlainJavaFxTest {
 
   private static final long TIMEOUT = 5000;
+  private static final String sampleClanTag = "xyz";
   @Rule
   public TemporaryFolder tempDir = new TemporaryFolder();
   @Mock
@@ -97,10 +98,6 @@ public class AbstractChatTabControllerTest extends AbstractPlainJavaFxTest {
   private UiService uiService;
   @Mock
   private ClanService clanService;
-  @Mock
-  private ReportingService reportingService;
-  @Mock
-  private EventBus eventBus;
   @Mock
   private WebViewConfigurer webViewConfigurer;
   @Mock
@@ -152,7 +149,7 @@ public class AbstractChatTabControllerTest extends AbstractPlainJavaFxTest {
     Clan clan = new Clan();
     clan.setClanId("1234");
 
-    when(clanService.getClanByTag("xyz")).thenReturn(clan);
+    when(clanService.getClanByTag(sampleClanTag)).thenReturn(clan);
     when(uiService.loadFxml("theme/chat/clan_tooltip.fxml")).thenReturn(mock(ClanTooltipController.class));
     when(uiService.getThemeFileUrl(any())).thenReturn(getClass().getResource("/theme/chat/chat_section.html"));
     when(timeService.asShortTime(any())).thenReturn("123");
@@ -204,14 +201,14 @@ public class AbstractChatTabControllerTest extends AbstractPlainJavaFxTest {
 
   @Test
   public void testHideClanInfo() throws Exception {
-    instance.clanInfo("xyz");
+    instance.clanInfo(sampleClanTag);
     instance.hideClanInfo();
     assertThat(instance.clanInfoPopup, is(CoreMatchers.nullValue()));
   }
 
   @Test
   public void testShowClanInfo() throws Exception {
-    instance.clanInfo("xyz");
+    instance.clanInfo(sampleClanTag);
     WaitForAsyncUtils.waitForFxEvents();
     assertThat(instance.clanInfoPopup, CoreMatchers.notNullValue());
   }
@@ -220,8 +217,10 @@ public class AbstractChatTabControllerTest extends AbstractPlainJavaFxTest {
   public void testShowClanWebsite() throws Exception {
     Clan clan = new Clan();
     clan.setClanId("1234");
-    instance.showClanWebsite("xyz");
-    when(clanService.getClanByTag("xyz")).thenReturn(clan);
+    instance.showClanWebsite(sampleClanTag);
+
+    WaitForAsyncUtils.waitForFxEvents();
+
     verify(clanService).getUrlOfClanWebsite(clan);
     verify(platformService).showDocument(any());
   }
