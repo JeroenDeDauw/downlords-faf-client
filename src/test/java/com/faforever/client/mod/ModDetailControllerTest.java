@@ -86,6 +86,7 @@ public class ModDetailControllerTest extends AbstractPlainJavaFxTest {
   public void testOnInstallButtonClicked() throws Exception {
     when(modService.downloadAndInstallMod(any(Mod.class), any(), any())).thenReturn(CompletableFuture.completedFuture(null));
 
+    instance.setMod(new Mod());
     instance.onInstallButtonClicked();
 
     verify(modService).downloadAndInstallMod(any(Mod.class), any(), any());
